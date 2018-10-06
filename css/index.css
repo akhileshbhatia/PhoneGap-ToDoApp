@@ -4,9 +4,6 @@ button{
     border-radius: 8px;
     font-size: 17px;
 }
-body{
-    background-color:#E4E4E4;
-}
 input,textarea{
     width: 90%;
     border-radius: 2px;
