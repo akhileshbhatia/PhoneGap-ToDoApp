@@ -49,7 +49,7 @@ loginBtn.addEventListener("click",function(){
     }
     else{
         if(password == userInfo[0].password){
-            window.location.href = "todo.html";
+            window.location.href = "todo";
         }
         else{
             alert("Incorrect password. Please enter the correct password.");
