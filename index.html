@@ -11,7 +11,7 @@
     <title>To Do App</title>
     </head>
     <body>
-        <h1>To Do App</h1>
+        <h1>To Do App - Login</h1>
         <div class="grid-login">
             <div>Username</div>
             <div><input type="text" id="username"></div>
@@ -20,9 +20,14 @@
             <div>Password</div>
             <div><input type="password" id="password"></div>
         </div>
-        <div style="text-align:center;"><button id="loginBtn">Login</button></div>
+        <div>
+            <label id="register">New User? Register</label>
+            <button id="loginBtn">Login</button>
+            <!-- <button id="registerBtn">Register</button> -->
+        </div>
+        <div style="display:none; color:red;" id="errorMsg">Unknown username or password. Please try again!!</div>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="json/credentials.json"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();

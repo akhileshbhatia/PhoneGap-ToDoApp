@@ -34,25 +34,33 @@ var loginBtn = document.querySelector("#loginBtn");
 loginBtn.addEventListener("click",function(){
     let username = document.querySelector("#username").value.trim().toLowerCase();
     let password = document.querySelector("#password").value.trim();
-
+    let errorMsg = document.querySelector("#errorMsg");
+    errorMsg.style.display = "none";
     if(username == "" || password == ""){
-        alert("username or password field is empty.");
+        alert("username or password field is empty");
         return;
     }
-
-    let userInfo = credentials.filter(function(data){
-        return data.username == username;
-    })
-
-    if(userInfo.length == 0){
-        alert("User does not exist. Please try again with a valid username");
-    }
-    else{
-        if(password == userInfo[0].password){
-            window.location.href = "todo";
+    let obj = JSON.parse('{"username" : "'+username+'","password" : "'+password+'"}');
+    $.ajax({
+        url: "/login",
+        type: "POST",
+        dataType: "json",
+        data: obj,
+        success: function(data){
+            if(data[0].rowcount >= 1){
+                window.location.href="todo";
+            }
+            else{
+                errorMsg.style.display ="block";
+            }
+        },
+        error: function(err){
+            console.log("Error: "+err);
         }
-        else{
-            alert("Incorrect password. Please enter the correct password.");
-        }
-    }
+    });
+})
+
+var registerLink = document.querySelector("#register");
+registerLink.addEventListener("click",function(){
+    window.location.href = "register";
 })

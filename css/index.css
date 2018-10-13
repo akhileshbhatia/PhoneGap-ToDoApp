@@ -3,6 +3,7 @@ button{
     width: 150px;
     border-radius: 8px;
     font-size: 17px;
+    margin-left: 28%;
 }
 input,textarea{
     width: 90%;
@@ -17,4 +18,14 @@ input,textarea{
 }
 h1{
     text-align: center;
+}
+#errorMsg{
+    display: none;
+    font-size: 18px;
+    color: red;
+}
+label{
+    margin-left: 3%;
+    text-decoration: underline;
+    cursor: pointer;
 }
