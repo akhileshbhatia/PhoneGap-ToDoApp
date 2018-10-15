@@ -26,7 +26,6 @@ con.connect(function(err){
 app.use("/css",express.static(path.join(__dirname,"/css")));
 app.use("/js",express.static(path.join(__dirname,"/js")));
 app.use("/img",express.static(path.join(__dirname,"/img")));
-app.use("/json",express.static(path.join(__dirname,"/json")));
 
 app.get("/",function(req,res){
     res.sendFile(path.join(__dirname,"/index.html"));
@@ -79,11 +78,12 @@ app.post("/register",function(req,res){
     })
 })
 
-app.listen(3000,function(err){
+var port = process.env.PORT || 3000;
+app.listen(port,function(err){
     if(err){
         console.log("Some error occured");
     }
     else{
-        console.log("Server listening on port 3000");
+        console.log("Server listening on port "+port);
     }
 });
