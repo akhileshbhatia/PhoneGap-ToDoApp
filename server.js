@@ -70,7 +70,15 @@ app.post("/register",function(req,res){
                         res.send("Error received: "+err);
                     }
                     else{
-                        res.send(JSON.parse('{"msg" : "User created successfully"}'));
+                        sql = "SELECT last_insert_id() as lastInsertId";
+                        con.query(sql,function(err,result){
+                            if(err){
+                                res.send("Error receieved: "+err);
+                            }
+                            else{
+                                res.send(JSON.parse('{"msg" : "'+result[0].lastInsertId+'"}'));
+                            }
+                        })
                     }
                 })
             }
