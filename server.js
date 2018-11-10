@@ -26,6 +26,7 @@ con.connect(function(err){
 app.use("/css",express.static(path.join(__dirname,"/css")));
 app.use("/js",express.static(path.join(__dirname,"/js")));
 app.use("/img",express.static(path.join(__dirname,"/img")));
+app.use("/videos",express.static(path.join(__dirname,"/videos")));
 
 app.get("/",function(req,res){
     res.sendFile(path.join(__dirname,"/index.html"));
@@ -35,15 +36,24 @@ app.get("/todo",function(req,res){
     res.sendFile(path.join(__dirname+"/todo.html"));
 })
 
+app.get("/playVideo",function(req,res){
+    res.sendFile(path.join(__dirname+"/video.html"));
+})
+
 app.post("/login",function(req,res){
-    let sql = "SELECT count(*) as rowcount FROM user_credentials WHERE username = '"+req.body.username+
+    let sql = "SELECT userid FROM user_credentials WHERE username = '"+req.body.username+
               "' and password = '"+req.body.password + "'";
     con.query(sql,function(err,result){
         if(err){
             res.send("error received: "+err);
         }
         else{
-            res.send(result);
+            if(result.length == 0){
+                res.send(JSON.parse('{"msg" : "User does not exist"}'));
+            }
+            else{
+                res.send(JSON.parse('{"msg" : "'+result[0].userid+'"}'));
+            }
         }
     })
 })
@@ -82,6 +92,32 @@ app.post("/register",function(req,res){
                     }
                 })
             }
+        }
+    })
+})
+
+app.post("/addTask",function(req,res){
+    let sql = "INSERT INTO user_tasks(taskName,taskDesc,taskDate,userid) "+
+              "VALUES ('"+req.body.taskName+"','"+req.body.taskDesc+"','"+req.body.taskDate+"',"+
+               req.body.userid+")";
+    con.query(sql,function(err,result){
+        if(err){
+            res.send("Error received: "+err);
+        }
+        else{
+            res.send(JSON.parse('{"msg" : "Task added successfully"}'));
+        }
+    })
+})
+
+app.get("/getTask",function(req,res){
+    let sql = "SELECT taskName,taskDate,taskDesc from user_tasks where userid = "+req.query.userid;
+    con.query(sql,function(err,result){
+        if(err){
+            res.send("Error received: "+err);
+        }
+        else{
+            res.send(result);
         }
     })
 })
